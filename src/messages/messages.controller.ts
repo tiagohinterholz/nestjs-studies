@@ -12,13 +12,18 @@ import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
 
 @Controller('messages')
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Get()
-  findAll(@Query() paginationDto: PaginationDto) {
+  findAll(
+    @Query() paginationDto: PaginationDto,
+    @ReqDataParam('headers') param,
+  ) {
+    console.log(param);
     return this.messagesService.findAll(paginationDto);
   }
 
