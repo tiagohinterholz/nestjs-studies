@@ -1,0 +1,20 @@
+import { NestMiddleware } from '@nestjs/common';
+import { NextFunction, Request, Response } from 'express';
+
+export class AnotherMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next: NextFunction) {
+    const authorization = req.headers?.authorization;
+
+    if (authorization) {
+      req['user'] = {
+        name: 'Luiz',
+        lastName: 'Otávio',
+      };
+    }
+    res.setHeader('X-Custom-Header2', 'The Value of Second Middleware');
+    // return res.status(404).send({
+    //   message: 'Not found',
+    // });
+    next();
+  }
+}
